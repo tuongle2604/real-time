@@ -1,0 +1,26 @@
+{
+  "name": "real-time",
+  "version": "1.0.0",
+  "description": "zzZ",
+  "main": "index.js",
+  "dependencies": {
+    "ejs": "^2.5.3",
+    "express": "^4.14.0",
+    "socket.io": "^1.7.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tuongle2604/real-time.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tuongle2604/real-time/issues"
+  },
+  "homepage": "https://github.com/tuongle2604/real-time#readme"
+}

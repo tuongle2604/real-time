@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="jquery-3.1.1.min.js"></script>
+    <script type="text/javascript">
+      var socket = io();
+      $(document).ready(function(){
+        $('#wrapper-chat').hide();
+        socket.on('GOT_PRIVATE_MESSAGE', function(data){
+          alert(data);
+        });
+        socket.on('NGUOI_DUNG_DANG_XUAT', function(data){
+          console.log(data);
+          $(`#${data}`).remove();
+        });
+        socket.on('LIST_USERNAME', function(data) {
+          data.forEach(function(e){
+            $('#list-username').append(`<li id="${e}">${e}</li>`);
+          });
+        });
+        socket.on('XAC_NHAN_DANG_KY', function(data){
+          if(data == 1){
+            $('#div-dang-ky').hide();
+            $('#wrapper-chat').show();
+          }else{
+            alert('That bai')
+          }
+        });
+        socket.on('NGUOI_DUNG_MOI', function(data){
+          $('#list-username').append(`<li id="${data}">${data}</li>`);
+        });
+        socket.on('SERVER_SEND_MESSAGE', function(data){
+          $('#list-message').append(`<li>${data}</li>`);
+        });
+        $('#btn-send-private').click(function(){
+          var data = {username: $('#dest-username').val(),message: $('#private-message').val()}
+          socket.emit('PRIVATE_MESSAGE', data);
+        });
+        $('#btn-dang-ky').click(function() {
+          socket.emit('NEW_USERNAME', $('#txt-username').val());
+          $('#txt-username').val("");
+        });
+        $('#btn-tin-nhan').click(function() {
+          socket.emit('NEW_MESSAGE', $('#txt-tin-nhan').val());
+          $('#txt-tin-nhan').val("");
+        });
+      });
+    </script>
+    <title></title>
+  </head>
+  <body>
+    <div id="div-dang-ky">
+      <input type="text" id="txt-username" placeholder="Nhap username"><br><br>
+      <button id="btn-dang-ky">Dang ky</button>
+    </div>
+    <div id="wrapper-chat">
+      <ul id="list-username"></ul>
+      <div id="div-chat">
+        <input type="text" id="txt-tin-nhan"/><br><br>
+        <button type="button" id="btn-tin-nhan">Gui tin</button>
+      </div>
+      <ul id="list-message"></ul>
+      <div id="private">
+        <input type="text" id="dest-username" placeholder="Your dest username"/>
+        <br><br>
+        <input type="text" id="private-message" placeholder="Your message">
+        <br><br>
+        <button id="btn-send-private">Gui</button>
+      </div>
+    </div>
+  </body>
+</html>
